@@ -1,6 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const {GenerateSW} = require('workbox-webpack-plugin');
 
 const env = process.env.NODE_ENV;
 
@@ -40,6 +41,10 @@ module.exports = {
             "template": path.resolve(__dirname, 'index.html'),
             "filename": 'index.html',
         }),
+        new GenerateSW({
+            skipWaiting: true,
+            clientsClaim: true
+        })
     ],
 
     "devServer": {
