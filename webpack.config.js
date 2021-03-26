@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {GenerateSW} = require('workbox-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const env = process.env.NODE_ENV;
 
@@ -42,8 +43,18 @@ module.exports = {
             "filename": 'index.html',
         }),
         new GenerateSW({
+            swDest: path.join(__dirname, "service-worker.js"),
             skipWaiting: true,
             clientsClaim: true
+        }),
+        new WebpackPwaManifest({
+            filename: "manifest.json",
+            name: 'PWA sandbox',
+            short_name: 'PWA sandbox',
+            description: 'This is a test app',
+            display: "standalone",
+            start_url: "index.html",
+            background_color: '#ffffff'
         })
     ],
 
